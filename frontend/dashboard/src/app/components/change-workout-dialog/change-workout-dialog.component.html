@@ -1,0 +1,29 @@
+<form [formGroup]="workoutFormGroup" class="box">
+  <mat-form-field appearance="fill">
+    <mat-label>Название</mat-label>
+    <textarea matInput formControlName="name"> </textarea>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Место видео</mat-label>
+    <textarea matInput formControlName="videoSrc"> </textarea>
+  </mat-form-field>
+  <mat-chip-listbox multiple aria-label="Fish selection" class="chip-row">
+    <mat-chip-option
+      #asdf
+      *ngFor="let tag of tags"
+      [selected]="setSelect(tag)"
+      (click)="editTag(tag, asdf.selected)"
+      >{{ tag.value }}</mat-chip-option
+    >
+  </mat-chip-listbox>
+  <div class="button-row">
+    <button
+      type="submit"
+      mat-flat-button
+      color="primary"
+      (click)="updateRole()"
+    >
+      Изменить</button
+    ><button mat-flat-button color="warn" (click)="cancelEdit()">Отмена</button>
+  </div>
+</form>

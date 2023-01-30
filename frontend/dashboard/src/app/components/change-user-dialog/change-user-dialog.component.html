@@ -1,0 +1,32 @@
+<form [formGroup]="userFormGroup" class="box">
+  <mat-form-field appearance="fill">
+    <mat-label>Имя пользователя</mat-label>
+    <input matInput formControlName="username" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Электронная почта</mat-label>
+    <input matInput formControlName="email" />
+  </mat-form-field>
+  <form [formGroup]="roleFormGroup">
+    <section class="roles" formArrayName="roles">
+      <h4>Роли:</h4>
+      <p *ngFor="let role of roles.controls; let i = index">
+        <mat-checkbox
+          [formControlName]="i"
+          (change)="changeRole(i, role.value)"
+          >{{ allRoles[i].value }}</mat-checkbox
+        >
+      </p>
+    </section>
+  </form>
+  <div class="button-row">
+    <button
+      type="submit"
+      mat-flat-button
+      color="primary"
+      (click)="updateUser()"
+    >
+      Изменить</button
+    ><button mat-flat-button color="warn" (click)="cancelEdit()">Отмена</button>
+  </div>
+</form>

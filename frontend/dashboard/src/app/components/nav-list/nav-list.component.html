@@ -1,0 +1,9 @@
+<mat-nav-list>
+  <a
+    *ngFor="let link of links"
+    mat-list-item
+    [routerLinkActive]="['is-active']"
+    [routerLink]="['/', link]"
+    >{{ link }}</a
+  >
+</mat-nav-list>

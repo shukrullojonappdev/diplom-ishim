@@ -1,0 +1,11 @@
+<form [formGroup]="tagFormGroup" class="box">
+  <mat-form-field appearance="fill">
+    <mat-label>Название</mat-label>
+    <input matInput formControlName="value" />
+  </mat-form-field>
+  <div class="button-row">
+    <button type="submit" mat-flat-button color="primary" (click)="updateTag()">
+      Изменить</button
+    ><button mat-flat-button color="warn" (click)="cancelEdit()">Отмена</button>
+  </div>
+</form>

@@ -1,0 +1,4 @@
+FROM postgres:15-alpine
+
+WORKDIR /app-db
+ENV POSTGRES_PASSWORD=1234

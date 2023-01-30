@@ -1,0 +1,15 @@
+<form [formGroup]="workoutFormGroup" class="box">
+  <mat-form-field appearance="fill">
+    <mat-label>Название</mat-label>
+    <textarea matInput formControlName="name"> </textarea>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Место видео</mat-label>
+    <textarea matInput formControlName="videoSrc"> </textarea>
+  </mat-form-field>
+  <div class="button-row">
+    <button type="submit" mat-flat-button color="primary" (click)="addTag()">
+      Создать</button
+    ><button mat-flat-button color="warn" (click)="cancelAdd()">Отмена</button>
+  </div>
+</form>

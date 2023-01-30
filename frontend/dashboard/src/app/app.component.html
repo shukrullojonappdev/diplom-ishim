@@ -1,0 +1,27 @@
+<div class="container">
+  <mat-toolbar class="header" color="primary">
+    <button
+      (click)="drawer.toggle()"
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span><a routerLink="/">Diplom ishi</a></span>
+    <span class="spacer"></span>
+    <button mat-icon-button>
+      <mat-icon>person</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-drawer-container class="drawer" autosize>
+    <mat-drawer #drawer class="sidenav" mode="side">
+      <app-nav-list></app-nav-list>
+    </mat-drawer>
+
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-container>
+</div>

@@ -1,0 +1,59 @@
+<div class="button-container">
+  <button mat-raised-button (click)="addTag()" class="button">Добавить</button>
+  <button
+    color="warn"
+    mat-raised-button
+    (click)="removeTag()"
+    class="button"
+    [disabled]="!selection.selected.length"
+  >
+    Удалить
+  </button>
+</div>
+
+<table mat-table [dataSource]="tags" class="mat-elevation-z8">
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef class="column__checkbox">
+      <mat-checkbox
+        (change)="$event ? toggleAllRows() : null"
+        [checked]="selection.hasValue() && isAllSelected()"
+        [indeterminate]="selection.hasValue() && !isAllSelected()"
+        [aria-label]="checkboxLabel()"
+      >
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row" class="column__checkbox">
+      <mat-checkbox
+        (click)="$event.stopPropagation()"
+        (change)="$event ? selection.toggle(row) : null"
+        [checked]="selection.isSelected(row)"
+        [aria-label]="checkboxLabel(row)"
+      >
+      </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef class="column__id">ID</th>
+    <td mat-cell *matCellDef="let element" class="column__id">
+      {{ element.id }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="value">
+    <th mat-header-cell *matHeaderCellDef>Название</th>
+    <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell *matHeaderCellDef class="column__edit"></th>
+    <td mat-cell *matCellDef="let element" class="column__edit">
+      <button color="accent" mat-mini-fab (click)="editTag(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns" class="row"></tr>
+</table>

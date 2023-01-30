@@ -1,0 +1,19 @@
+<form [formGroup]="userFormGroup" class="box">
+  <mat-form-field appearance="fill">
+    <mat-label>Имя пользователя</mat-label>
+    <input matInput formControlName="username" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Электронная почта</mat-label>
+    <input matInput formControlName="email" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Пароль</mat-label>
+    <input matInput formControlName="password" />
+  </mat-form-field>
+  <div class="button-row">
+    <button type="submit" mat-flat-button color="primary" (click)="addUser()">
+      Создать</button
+    ><button mat-flat-button color="warn" (click)="cancelAdd()">Отмена</button>
+  </div>
+</form>

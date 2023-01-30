@@ -1,0 +1,15 @@
+version: '1'
+services:
+  database:
+    ports:
+      - 5432:5432
+    volumes:
+      - ./backend/database:/app-db
+    build: ./backend/database
+
+  api:
+    ports:
+      - 3000:3001
+    volumes:
+      - ./backend/api:/app-api
+    build: ./backend/api
