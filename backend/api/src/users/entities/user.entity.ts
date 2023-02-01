@@ -22,6 +22,9 @@ export class User {
   @Column()
   password: string
 
+  @Column({ nullable: true })
+  refreshToken: string
+
   @ManyToMany(() => Role, (role) => role.users, { cascade: true })
   @JoinTable({ name: 'userRoles' })
   roles: Role[]

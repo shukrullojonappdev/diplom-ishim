@@ -59,15 +59,13 @@ export class UsersService {
   }
 
   async findByEmail(email: string) {
-    const findedUser = await this.usersRepository.findOne({
-      where: { email: email },
-    })
+    const findedUser = await this.usersRepository.findOneBy({ email })
 
-    if (!findedUser) {
-      throw new HttpException('Ползователь не найден.', HttpStatus.BAD_REQUEST)
+    if (findedUser) {
+      return findedUser
+    } else {
+      return null
     }
-
-    return findedUser
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
