@@ -16,12 +16,7 @@ export class AccessJwtStrategy extends PassportStrategy(
       secretOrKey: jwtContants.accessSecret,
     })
   }
-  async validate(payload: {
-    id: number
-    username: string
-    email: string
-    roles: Role[]
-  }) {
+  async validate(payload: any) {
     return {
       ...payload,
     }

@@ -7,6 +7,4 @@ export class RegistrationDto {
   email: string
   @ApiProperty()
   password: string
-  @ApiProperty()
-  rePassword: string
 }

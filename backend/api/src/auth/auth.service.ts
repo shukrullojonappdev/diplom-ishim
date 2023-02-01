@@ -4,6 +4,7 @@ import { UsersService } from 'src/users/users.service'
 import { LoginDto } from './dto/login.dto'
 import { RegistrationDto } from './dto/registration.dto'
 import { jwtContants } from './constants'
+import * as bcrypt from 'bcrypt'
 import { Role } from 'src/roles/entities/role.entity'
 
 @Injectable()
@@ -16,12 +17,12 @@ export class AuthService {
   async login(loginDto: LoginDto) {
     const user = await this.validateUser(loginDto.email, loginDto.password)
     if (user) {
-      const { workouts, refreshToken, ...currentUser } = user
-      const tokens = await this.generateTokens(currentUser)
+      const { workouts, refreshToken, ...payload } = user
+      const tokens = await this.generateTokens(payload)
+      const hashedRefreshToken = await bcrypt.hash(tokens.refreshToken, 10)
       await this.usersService.update(user.id, {
-        refreshToken: tokens.refreshToken,
+        refreshToken: hashedRefreshToken,
       })
-
       return tokens
     }
 
@@ -44,21 +45,50 @@ export class AuthService {
     }
 
     if (userExists === null) {
-      const { rePassword, ...newUser } = registrationDto
+      const hashedPassword = await bcrypt.hash(registrationDto.password, 10)
+      const user = await this.usersService.create({
+        ...registrationDto,
+        password: hashedPassword,
+      })
 
-      const user = await this.usersService.create(newUser)
-      const { workouts, refreshToken, ...currentUser } = user
-      const tokens = await this.generateTokens(currentUser)
-      this.usersService.update(user.id, { refreshToken: tokens.refreshToken })
-
+      const { password, workouts, refreshToken, ...payload } = user
+      const tokens = await this.generateTokens(payload)
+      const hashedRefreshToken = await bcrypt.hash(tokens.refreshToken, 10)
+      await this.usersService.update(user.id, {
+        refreshToken: hashedRefreshToken,
+      })
       return tokens
     }
   }
 
+  async logout(userId: number) {
+    return await this.usersService.update(userId, { refreshToken: null })
+  }
+
+  async refresh(id: number, refTok: string) {
+    const user = await this.usersService.findOne(id)
+    if (!user || !user.refreshToken) {
+      throw new HttpException('Нет доступа!', HttpStatus.FORBIDDEN)
+    }
+    const refreshTokenMatch = await bcrypt.compare(refTok, user.refreshToken)
+
+    if (!refreshTokenMatch) {
+      throw new HttpException('Нет доступа!', HttpStatus.FORBIDDEN)
+    }
+    const { workouts, password, refreshToken, ...payload } = user
+    const tokens = await this.generateTokens(payload)
+    const hashedRefreshToken = await bcrypt.hash(tokens.refreshToken, 10)
+    await this.usersService.update(user.id, {
+      refreshToken: hashedRefreshToken,
+    })
+    return tokens
+  }
+
   private async validateUser(email: string, password: string) {
     const user = await this.usersService.findByEmail(email)
+    const passwordMatch = await bcrypt.compare(password, user.password)
 
-    if (user && password === user.password) {
+    if (user && passwordMatch) {
       const { password, ...result } = user
       return result
     }
@@ -70,6 +100,7 @@ export class AuthService {
     id: number
     username: string
     email: string
+    refreshToken?: string
     roles: Role[]
   }) {
     const accessToken = await this.jwtService.signAsync(payload, {
