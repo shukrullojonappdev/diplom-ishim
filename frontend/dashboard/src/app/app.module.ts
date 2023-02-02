@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MaterialModule } from './modules/material.module'
-import { NavListComponent } from './components/nav-list/nav-list.component'
 import { WorkoutsModule } from './layers/workouts/workouts.module'
 import { TagsModule } from './layers/tags/tags.module'
 import { FormsModule } from '@angular/forms'
@@ -17,22 +16,24 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { wokroutsReducer } from './redux/reducers/workouts.reducer'
 import { EffectsModule } from '@ngrx/effects'
 import { WokroutsEffect } from './redux/effects/workouts.effect'
+import { LoginModule } from './pages/login/login.module'
+import { RegistrationModule } from './pages/registration/registration.module'
+import { MainModule } from './pages/main/main.module'
 
 @NgModule({
-  declarations: [AppComponent, NavListComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    HomeModule,
-    UsersModule,
-    WorkoutsModule,
-    TagsModule,
-    MaterialModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MaterialModule,
     StoreModule.forRoot({ workouts: wokroutsReducer }),
     EffectsModule.forRoot([WokroutsEffect]),
+    LoginModule,
+    RegistrationModule,
+    MainModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [],
