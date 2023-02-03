@@ -6,10 +6,6 @@ import { Observable } from 'rxjs'
 import { ChangeWorkoutDialogComponent } from 'src/app/components/change-workout-dialog/change-workout-dialog.component'
 import { CreateWorkoutDialogComponent } from 'src/app/components/create-workout-dialog/create-workout-dialog.component'
 import Workout from 'src/app/interfaces/workout.interface'
-import * as workoutsActions from 'src/app/redux/actions/workouts.action'
-import { AppState } from 'src/app/redux/app.state'
-import { selectorWokrouts } from 'src/app/redux/selectors/workouts.selector'
-import { TagsService } from 'src/app/services/tags.service'
 import { WorkoutsService } from 'src/app/services/workouts.service'
 
 @Component({
@@ -25,19 +21,14 @@ export class WorkoutsComponent {
 
   constructor(
     private workoutsSerice: WorkoutsService,
-    private dialog: MatDialog,
-    private store: Store<AppState>
-  ) {
-    this.workouts$ = store.select(selectorWokrouts)
-  }
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.getWorkouts()
   }
 
-  getWorkouts() {
-    this.store.dispatch(workoutsActions.getWorkouts())
-  }
+  getWorkouts() {}
 
   addWorkout() {
     const workoutDialogRef = this.dialog.open(CreateWorkoutDialogComponent, {
