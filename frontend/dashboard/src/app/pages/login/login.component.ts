@@ -2,7 +2,8 @@ import { Component } from '@angular/core'
 
 import { Store } from '@ngrx/store'
 import * as fromIndex from '../../store/index'
-import * as fromAuthActions from '../../store/auth/auth.actions'
+import * as fromAuthStore from '../../store/auth'
+import { FormBuilder, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-login',
@@ -10,20 +11,21 @@ import * as fromAuthActions from '../../store/auth/auth.actions'
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  constructor(private store: Store<fromIndex.State>) {}
+  constructor(
+    private store: Store<fromIndex.State>,
+    private formBuilder: FormBuilder
+  ) {}
+
+  loginForm = this.formBuilder.group({
+    email: ['', Validators.required],
+    password: ['', Validators.required],
+  })
 
   login() {
     this.store.dispatch(
-      fromAuthActions.Login({
-        payload: { email: 'string', password: 'strig' },
+      fromAuthStore.Login({
+        payload: this.loginForm.value,
       })
     )
-  }
-
-  registration() {
-    this.store.dispatch(fromAuthActions.RegistrationSuccess({ tokens: '' }))
-  }
-  logout() {
-    this.store.dispatch(fromAuthActions.LogoutSuccess())
   }
 }

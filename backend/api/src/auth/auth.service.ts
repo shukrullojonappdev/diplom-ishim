@@ -23,7 +23,15 @@ export class AuthService {
       await this.usersService.update(user.id, {
         refreshToken: hashedRefreshToken,
       })
-      return tokens
+      return {
+        tokens: { ...tokens },
+        user: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          roles: user.roles,
+        },
+      }
     }
 
     throw new HttpException(
@@ -57,7 +65,15 @@ export class AuthService {
       await this.usersService.update(user.id, {
         refreshToken: hashedRefreshToken,
       })
-      return tokens
+      return {
+        tokens: { ...tokens },
+        user: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          roles: user.roles,
+        },
+      }
     }
   }
 
@@ -81,7 +97,15 @@ export class AuthService {
     await this.usersService.update(user.id, {
       refreshToken: hashedRefreshToken,
     })
-    return tokens
+    return {
+      tokens: { ...tokens },
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        roles: user.roles,
+      },
+    }
   }
 
   private async validateUser(email: string, password: string) {

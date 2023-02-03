@@ -1,14 +1,10 @@
 import { createAction, props } from '@ngrx/store'
-import * as fromAuthInterface from './auth.interface'
 
-export const Login = createAction(
-  '[Auth] Login',
-  props<{ payload: fromAuthInterface.Login }>()
-)
+export const Login = createAction('[Auth] Login', props<{ payload: any }>())
 
 export const LoginSuccess = createAction(
   '[Auth] Login Success',
-  props<{ tokens: any }>()
+  props<{ data: any }>()
 )
 
 export const LoginFailure = createAction(
@@ -18,12 +14,12 @@ export const LoginFailure = createAction(
 
 export const Registration = createAction(
   '[Auth] Registration',
-  props<{ payload: fromAuthInterface.Registration }>()
+  props<{ payload: any }>()
 )
 
 export const RegistrationSuccess = createAction(
   '[Auth] Registration Success',
-  props<{ tokens: any }>()
+  props<{ data: any }>()
 )
 
 export const RegistrationFailure = createAction(

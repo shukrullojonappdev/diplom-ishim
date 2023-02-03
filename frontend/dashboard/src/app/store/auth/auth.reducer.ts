@@ -1,43 +1,45 @@
 import { createReducer, on } from '@ngrx/store'
 import User from 'src/app/interfaces/user.interface'
-import * as fromAuthActions from './auth.actions'
+import * as fromAuthAction from './auth.actions'
 
 export const authFeatureKey = 'auth'
 
 export interface State {
   isLoggedIn: boolean
   tokens: any
+  user: any
 }
 
 export const initialState: State = {
   isLoggedIn: false,
   tokens: null,
+  user: null,
 }
 
 export const reducer = createReducer(
   initialState,
-  on(fromAuthActions.LoginSuccess, (state, { tokens }) => {
+  on(fromAuthAction.LoginSuccess, (state, { data }) => {
     return {
       ...state,
       isLoggedIn: true,
-      tokens: {
-        ...tokens,
-      },
+      tokens: data.tokens,
+      user: data.user,
     }
   }),
-  on(fromAuthActions.RegistrationSuccess, (state, { tokens }) => {
+  on(fromAuthAction.RegistrationSuccess, (state, { data }) => {
     return {
       ...state,
       isLoggedIn: true,
-      tokens: {
-        ...tokens,
-      },
+      tokens: data.tokens,
+      user: data.user,
     }
   }),
-  on(fromAuthActions.LogoutSuccess, (state) => {
+  on(fromAuthAction.LogoutSuccess, (state) => {
     return {
       ...state,
       isLoggedIn: false,
+      tokens: null,
+      user: null,
     }
   })
 )

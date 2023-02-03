@@ -17,4 +17,8 @@ export class AuthService {
   registration(payload: any): Observable<any> {
     return this.http.post(`${this.rolesUrl}registration`, payload)
   }
+
+  logout(): Observable<any> {
+    return this.http.get(`${this.rolesUrl}logout`)
+  }
 }

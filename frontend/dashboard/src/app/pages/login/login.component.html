@@ -1,19 +1,17 @@
-<!-- <mat-sidenav-container>
+<mat-sidenav-container>
   <div class="container">
-    <mat-card class="card">
-      <mat-form-field appearance="fill">
-        <mat-label>Электронная почта</mat-label>
-        <input matInput />
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Пароль</mat-label>
-        <input matInput />
-      </mat-form-field>
-      <button mat-flat-button color="primary">Вход</button>
-    </mat-card>
+    <form [formGroup]="loginForm">
+      <mat-card class="card">
+        <mat-form-field appearance="fill">
+          <mat-label>Электронная почта</mat-label>
+          <input matInput formControlName="email" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Пароль</mat-label>
+          <input matInput formControlName="password" />
+        </mat-form-field>
+        <button mat-flat-button color="primary" (click)="login()">Вход</button>
+      </mat-card>
+    </form>
   </div>
-</mat-sidenav-container> -->
-
-<button (click)="login()">login</button>
-<button (click)="registration()">registration</button>
-<button (click)="logout()">logout</button>
+</mat-sidenav-container>

@@ -10,6 +10,10 @@ import { TagsModule } from 'src/app/layers/tags/tags.module'
 import { RolesModule } from 'src/app/layers/roles/roles.module'
 import { WorkoutsModule } from 'src/app/layers/workouts/workouts.module'
 
+import { StoreModule } from '@ngrx/store'
+import { EffectsModule } from '@ngrx/effects'
+import * as authStore from '../../store/auth'
+
 @NgModule({
   declarations: [MainComponent, NavListComponent],
   imports: [
@@ -20,6 +24,8 @@ import { WorkoutsModule } from 'src/app/layers/workouts/workouts.module'
     TagsModule,
     RolesModule,
     WorkoutsModule,
+    StoreModule.forFeature(authStore.authFeatureKey, authStore.reducer),
+    EffectsModule.forFeature([authStore.AuthEffects]),
   ],
 })
 export class MainModule {}
