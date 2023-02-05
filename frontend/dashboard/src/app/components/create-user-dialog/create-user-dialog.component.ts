@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core'
 import { FormBuilder } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog'
-import { UsersService } from 'src/app/services/users.service'
+import { UsersService } from 'src/app/core/services/users.service'
 
 @Component({
   selector: 'app-create-user-dialog',

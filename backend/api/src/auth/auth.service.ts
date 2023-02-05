@@ -3,7 +3,6 @@ import { JwtService } from '@nestjs/jwt'
 import { UsersService } from 'src/users/users.service'
 import { LoginDto } from './dto/login.dto'
 import { RegistrationDto } from './dto/registration.dto'
-import { jwtContants } from './constants'
 import * as bcrypt from 'bcrypt'
 import { Role } from 'src/roles/entities/role.entity'
 
@@ -19,7 +18,7 @@ export class AuthService {
     if (user) {
       const { workouts, refreshToken, ...payload } = user
       const tokens = await this.generateTokens(payload)
-      const hashedRefreshToken = await bcrypt.hash(tokens.refreshToken, 10)
+      const hashedRefreshToken = await bcrypt.hash(tokens.refresh.token, 10)
       await this.usersService.update(user.id, {
         refreshToken: hashedRefreshToken,
       })
@@ -61,7 +60,7 @@ export class AuthService {
 
       const { password, workouts, refreshToken, ...payload } = user
       const tokens = await this.generateTokens(payload)
-      const hashedRefreshToken = await bcrypt.hash(tokens.refreshToken, 10)
+      const hashedRefreshToken = await bcrypt.hash(tokens.refresh.token, 10)
       await this.usersService.update(user.id, {
         refreshToken: hashedRefreshToken,
       })
@@ -93,7 +92,7 @@ export class AuthService {
     }
     const { workouts, password, refreshToken, ...payload } = user
     const tokens = await this.generateTokens(payload)
-    const hashedRefreshToken = await bcrypt.hash(tokens.refreshToken, 10)
+    const hashedRefreshToken = await bcrypt.hash(tokens.refresh.token, 10)
     await this.usersService.update(user.id, {
       refreshToken: hashedRefreshToken,
     })
@@ -128,18 +127,24 @@ export class AuthService {
     roles: Role[]
   }) {
     const accessToken = await this.jwtService.signAsync(payload, {
-      secret: jwtContants.accessSecret,
-      expiresIn: '30min',
+      secret: process.env.ACCESS_TOKEN_SECRET,
+      expiresIn: process.env.ACCESS_TOKEN_LIFE_TIME,
     })
 
     const refreshToken = await this.jwtService.signAsync(payload, {
-      secret: jwtContants.refreshSecret,
-      expiresIn: '30day',
+      secret: process.env.REFRESH_TOKEN_SECRET,
+      expiresIn: process.env.REFRESH_TOKEN_LIFE_TIME,
     })
 
     return {
-      accessToken: accessToken,
-      refreshToken: refreshToken,
+      access: {
+        token: accessToken,
+        expiresIn: process.env.ACCESS_TOKEN_LIFE_TIME,
+      },
+      refresh: {
+        token: refreshToken,
+        expiresIn: process.env.REFRESH_TOKEN_LIFE_TIME,
+      },
     }
   }
 }

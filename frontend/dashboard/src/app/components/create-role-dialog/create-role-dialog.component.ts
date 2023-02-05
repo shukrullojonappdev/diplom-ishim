@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { FormBuilder } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog'
-import { RolesService } from 'src/app/services/roles.service'
+import { RolesService } from 'src/app/core/services/roles.service'
 
 @Component({
   selector: 'app-create-role-dialog',

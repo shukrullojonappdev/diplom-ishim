@@ -8,8 +8,8 @@ import {
 import { Observable } from 'rxjs'
 
 import { Store } from '@ngrx/store'
-import * as fromIndexStore from '../store'
-import * as fromAuthStore from '../store/auth'
+import * as fromIndexStore from '../../store'
+import * as fromAuthStore from '../../store/auth'
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -22,12 +22,12 @@ export class JwtInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     this.store
-      .select(fromAuthStore.selectAuthAccessToken)
+      .select(fromAuthStore.selectAuthToken)
       .subscribe((_tokens) => (this.tokens = _tokens))
 
     if (this.tokens) {
       request = request.clone({
-        setHeaders: { Authorization: `Bearer ${this.tokens.accessToken}` },
+        setHeaders: { Authorization: `Bearer ${this.tokens.access.token}` },
       })
     }
 

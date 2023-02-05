@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { ChangeUserDialogComponent } from 'src/app/components/change-user-dialog/change-user-dialog.component'
 import { CreateUserDialogComponent } from 'src/app/components/create-user-dialog/create-user-dialog.component'
-import User from 'src/app/interfaces/user.interface'
-import { UsersService } from 'src/app/services/users.service'
+import User from 'src/app/core/interfaces/user.interface'
+import { UsersService } from 'src/app/core/services/users.service'
 
 @Component({
   selector: 'app-users',

@@ -3,7 +3,7 @@ import { Component } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { ChangeRoleDialogComponent } from 'src/app/components/change-role-dialog/change-role-dialog.component'
 import { CreateRoleDialogComponent } from 'src/app/components/create-role-dialog/create-role-dialog.component'
-import { RolesService } from 'src/app/services/roles.service'
+import { RolesService } from 'src/app/core/services/roles.service'
 
 @Component({
   selector: 'app-roles',

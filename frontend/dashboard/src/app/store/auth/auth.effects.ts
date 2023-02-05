@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { map, mergeMap, catchError, of, tap } from 'rxjs'
-import { AuthService } from 'src/app/services/auth.service'
+import { AuthService } from 'src/app/core/services/auth.service'
 import * as fromAuthAction from './auth.actions'
 
 @Injectable()
@@ -19,8 +19,8 @@ export class AuthEffects {
       map((action) => action.payload),
       mergeMap((payload) =>
         this.authService.login(payload).pipe(
-          map((_data) => fromAuthAction.LoginSuccess({ data: _data })),
           tap(() => this.router.navigate(['/', 'home'])),
+          map((_data) => fromAuthAction.LoginSuccess({ data: _data })),
           catchError((error) =>
             of(fromAuthAction.LoginFailure({ error: error }))
           )
@@ -35,8 +35,8 @@ export class AuthEffects {
       map((action) => action.payload),
       mergeMap((payload) =>
         this.authService.registration(payload).pipe(
-          map((_data) => fromAuthAction.LoginSuccess({ data: _data })),
           tap(() => this.router.navigate(['/', 'home'])),
+          map((_data) => fromAuthAction.LoginSuccess({ data: _data })),
           catchError((error) =>
             of(fromAuthAction.RegistrationFailure({ error: error }))
           )
@@ -50,8 +50,8 @@ export class AuthEffects {
       ofType(fromAuthAction.Logout),
       mergeMap(() =>
         this.authService.logout().pipe(
-          map(() => fromAuthAction.LogoutSuccess()),
           tap(() => this.router.navigate(['/', 'login'])),
+          map(() => fromAuthAction.LogoutSuccess()),
           catchError((error) =>
             of(fromAuthAction.LogoutFailure({ error: error }))
           )

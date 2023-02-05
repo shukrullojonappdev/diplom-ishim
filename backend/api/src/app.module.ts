@@ -11,7 +11,7 @@ import { User } from './users/entities/user.entity'
 import { Tag } from './tags/entities/tag.entity'
 import { Role } from './roles/entities/role.entity'
 import { Workout } from './workouts/entities/workout.entity'
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './auth/auth.module'
 
 @Module({
   imports: [

@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 import { ChangeWorkoutDialogComponent } from 'src/app/components/change-workout-dialog/change-workout-dialog.component'
 import { CreateWorkoutDialogComponent } from 'src/app/components/create-workout-dialog/create-workout-dialog.component'
-import Workout from 'src/app/interfaces/workout.interface'
-import { WorkoutsService } from 'src/app/services/workouts.service'
+import Workout from 'src/app/core/interfaces/workout.interface'
+import { WorkoutsService } from 'src/app/core/services/workouts.service'
 
 @Component({
   selector: 'app-workouts',

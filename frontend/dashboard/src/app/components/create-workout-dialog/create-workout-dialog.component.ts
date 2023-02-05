@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { FormBuilder } from '@angular/forms'
 import { MatDialogRef } from '@angular/material/dialog'
-import { WorkoutsService } from 'src/app/services/workouts.service'
+import { WorkoutsService } from 'src/app/core/services/workouts.service'
 
 @Component({
   selector: 'app-create-workout-dialog',

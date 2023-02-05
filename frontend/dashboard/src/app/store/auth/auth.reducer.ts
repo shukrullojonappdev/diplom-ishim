@@ -1,8 +1,10 @@
 import { createReducer, on } from '@ngrx/store'
-import User from 'src/app/interfaces/user.interface'
 import * as fromAuthAction from './auth.actions'
 
 export const authFeatureKey = 'auth'
+const initializeState = JSON.parse(
+  localStorage.getItem(authFeatureKey) as string
+)
 
 export interface State {
   isLoggedIn: boolean
@@ -10,31 +12,50 @@ export interface State {
   user: any
 }
 
-export const initialState: State = {
-  isLoggedIn: false,
-  tokens: null,
-  user: null,
-}
+export const initialState: State = initializeState
+  ? {
+      ...initializeState,
+    }
+  : {
+      isLoggedIn: false,
+      tokens: null,
+      user: null,
+    }
 
 export const reducer = createReducer(
   initialState,
   on(fromAuthAction.LoginSuccess, (state, { data }) => {
-    return {
+    let newState = {
       ...state,
       isLoggedIn: true,
       tokens: data.tokens,
       user: data.user,
+    }
+    localStorage.setItem(authFeatureKey, JSON.stringify(newState))
+    const currentState = JSON.parse(
+      localStorage.getItem(authFeatureKey) as string
+    )
+    return {
+      ...currentState,
     }
   }),
   on(fromAuthAction.RegistrationSuccess, (state, { data }) => {
-    return {
+    let newState = {
       ...state,
       isLoggedIn: true,
       tokens: data.tokens,
       user: data.user,
     }
+    localStorage.setItem(authFeatureKey, JSON.stringify(newState))
+    const currentState = JSON.parse(
+      localStorage.getItem(authFeatureKey) as string
+    )
+    return {
+      ...currentState,
+    }
   }),
   on(fromAuthAction.LogoutSuccess, (state) => {
+    localStorage.removeItem(authFeatureKey)
     return {
       ...state,
       isLoggedIn: false,

@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core'
 import { FormBuilder } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
-import { TagsService } from 'src/app/services/tags.service'
+import { TagsService } from 'src/app/core/services/tags.service'
 
 @Component({
   selector: 'app-change-tag-dialog',

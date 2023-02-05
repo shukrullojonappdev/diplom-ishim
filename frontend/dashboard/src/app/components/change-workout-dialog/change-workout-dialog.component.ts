@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { FormArray, FormBuilder } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
-import { TagsService } from 'src/app/services/tags.service'
-import { WorkoutsService } from 'src/app/services/workouts.service'
+import { TagsService } from 'src/app/core/services/tags.service'
+import { WorkoutsService } from 'src/app/core/services/workouts.service'
 
 @Component({
   selector: 'app-change-workout-dialog',

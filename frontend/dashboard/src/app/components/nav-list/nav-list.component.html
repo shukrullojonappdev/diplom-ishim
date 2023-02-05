@@ -1,9 +1,11 @@
 <mat-nav-list>
-  <a
-    *ngFor="let link of links"
-    mat-list-item
-    [routerLinkActive]="['is-active']"
-    [routerLink]="['/home/', link]"
-    >{{ link }}</a
-  >
+  <div *ngFor="let link of links; let i = index">
+    <a
+      *ngIf="i === 0 ? admin : admin || moderator"
+      mat-list-item
+      [routerLinkActive]="['is-active']"
+      [routerLink]="['/home/', link]"
+      >{{ link }}</a
+    >
+  </div>
 </mat-nav-list>

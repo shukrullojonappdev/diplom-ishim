@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core'
 import { FormBuilder } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
-import { RolesService } from 'src/app/services/roles.service'
+import { RolesService } from 'src/app/core/services/roles.service'
 
 @Component({
   selector: 'app-change-role-dialog',

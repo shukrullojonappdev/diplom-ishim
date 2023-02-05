@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { ChangeTagDialogComponent } from 'src/app/components/change-tag-dialog/change-tag-dialog.component'
 import { CreateTagDialogComponent } from 'src/app/components/create-tag-dialog/create-tag-dialog.component'
-import Tag from 'src/app/interfaces/tag.interface'
-import { TagsService } from 'src/app/services/tags.service'
+import Tag from 'src/app/core/interfaces/tag.interface'
+import { TagsService } from 'src/app/core/services/tags.service'
 
 @Component({
   selector: 'app-tags',

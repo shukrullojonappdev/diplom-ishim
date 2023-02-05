@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Router } from '@angular/router'
 
 @Component({
@@ -6,6 +6,11 @@ import { Router } from '@angular/router'
   templateUrl: './nav-list.component.html',
   styleUrls: ['./nav-list.component.scss'],
 })
-export class NavListComponent {
+export class NavListComponent implements OnInit {
   links = ['users', 'workouts', 'tags', 'roles']
+
+  @Input() admin: boolean
+  @Input() moderator: boolean
+
+  ngOnInit(): void {}
 }

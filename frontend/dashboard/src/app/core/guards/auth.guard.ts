@@ -7,8 +7,8 @@ import {
   UrlTree,
 } from '@angular/router'
 import { Observable } from 'rxjs'
-import * as fromAuthStore from '../store/auth'
-import * as fromIndexStore from '../store'
+import * as fromAuthStore from '../../store/auth'
+import * as fromIndexStore from '../../store'
 import { Store } from '@ngrx/store'
 
 @Injectable({
@@ -34,10 +34,10 @@ export class AuthGuard implements CanActivate {
       .select(fromAuthStore.selectAuthStatus)
       .subscribe((_isLoggedIn) => (this.isLoggedIn = _isLoggedIn))
 
-    if (this.isLoggedIn) {
+    if (!this.isLoggedIn) {
       return true
     } else {
-      this.router.navigate(['/', 'login'])
+      this.router.navigate(['/', 'home'])
       return false
     }
   }

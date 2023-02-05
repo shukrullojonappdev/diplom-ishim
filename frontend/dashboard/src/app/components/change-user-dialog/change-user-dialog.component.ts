@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { FormArray, FormBuilder } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
-import { RolesService } from 'src/app/services/roles.service'
-import { UsersService } from 'src/app/services/users.service'
+import { RolesService } from 'src/app/core/services/roles.service'
+import { UsersService } from 'src/app/core/services/users.service'
 
 @Component({
   selector: 'app-change-user-dialog',
