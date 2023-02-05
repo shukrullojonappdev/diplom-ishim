@@ -1,23 +1,61 @@
 <mat-sidenav-container>
   <div class="container">
-    <mat-card class="card">
-      <mat-form-field appearance="fill">
-        <mat-label>Имя пользователя</mat-label>
-        <input matInput />
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Электронная почта</mat-label>
-        <input matInput />
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Пароль</mat-label>
-        <input matInput />
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Повторите пароль</mat-label>
-        <input matInput />
-      </mat-form-field>
-      <button mat-flat-button color="primary">Регистрация</button>
-    </mat-card>
+    <img
+      class="logo"
+      src="../../../assets/hal-high-resolution-logo-white-on-transparent-background.webp"
+      alt="logo"
+    />
+    <form [formGroup]="registrationForm">
+      <mat-card class="card">
+        <mat-form-field appearance="fill">
+          <mat-label>Имя пользователя</mat-label>
+          <input matInput formControlName="username" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Электронная почта</mat-label>
+          <input matInput formControlName="email" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Пароль</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            [type]="hide1 ? 'password' : 'text'"
+          />
+          <button
+            type="button"
+            mat-icon-button
+            matSuffix
+            (click)="hide1 = !hide1"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide1"
+          >
+            <mat-icon>{{ hide1 ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Повторите пароль</mat-label>
+          <input
+            matInput
+            formControlName="rePassword"
+            [type]="hide2 ? 'password' : 'text'"
+          />
+          <button
+            type="button"
+            mat-icon-button
+            matSuffix
+            (click)="hide2 = !hide2"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide2"
+          >
+            <mat-icon>{{ hide2 ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <button mat-flat-button color="primary" (click)="registration()">
+          Регистрация
+        </button>
+      </mat-card>
+    </form>
+    <div class="link" (click)="navigate('login')">login</div>
   </div>
 </mat-sidenav-container>

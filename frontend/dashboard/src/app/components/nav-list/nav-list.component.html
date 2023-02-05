@@ -1,7 +1,7 @@
 <mat-nav-list>
   <div *ngFor="let link of links; let i = index">
     <a
-      *ngIf="i === 0 ? admin : admin || moderator"
+      *ngIf="admin"
       mat-list-item
       [routerLinkActive]="['is-active']"
       [routerLink]="['/home/', link]"

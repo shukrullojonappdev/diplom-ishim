@@ -39,13 +39,6 @@ export class MainComponent implements OnInit {
     return false
   }
 
-  setModeratorView() {
-    if (this.user.roles.find((e: any) => e.value === RoleEnum.Moderator)) {
-      return true
-    }
-    return false
-  }
-
   logout() {
     this.store.dispatch(fromAuthStore.Logout())
   }

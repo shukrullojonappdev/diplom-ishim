@@ -1,7 +1,7 @@
 <div class="container">
   <mat-toolbar class="header" color="primary">
     <button
-      *ngIf="setAdminView() || setModeratorView()"
+      *ngIf="setAdminView()"
       (click)="drawer.toggle()"
       mat-icon-button
       class="example-icon"
@@ -24,10 +24,9 @@
 
   <mat-drawer-container class="drawer" autosize>
     <mat-drawer #drawer class="sidenav" mode="side">
-      <app-nav-list
-        [admin]="setAdminView()"
-        [moderator]="setModeratorView()"
-      ></app-nav-list>
+      <div *ngIf="setAdminView()">
+        <app-nav-list [admin]="setAdminView()"></app-nav-list>
+      </div>
     </mat-drawer>
 
     <div class="content">

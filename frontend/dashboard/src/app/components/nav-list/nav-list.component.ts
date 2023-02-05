@@ -10,7 +10,6 @@ export class NavListComponent implements OnInit {
   links = ['users', 'workouts', 'tags', 'roles']
 
   @Input() admin: boolean
-  @Input() moderator: boolean
 
   ngOnInit(): void {}
 }
