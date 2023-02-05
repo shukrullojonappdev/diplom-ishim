@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { Observable } from 'rxjs'
+import { Observable, take } from 'rxjs'
 
 import { Store } from '@ngrx/store'
 import * as fromIndexStore from '../../store'
@@ -18,9 +18,7 @@ export class MainComponent implements OnInit {
   constructor(
     private router: Router,
     private store: Store<fromIndexStore.State>
-  ) {
-    store.select(fromAuthStore.selectLoggedUser)
-  }
+  ) {}
 
   ngOnInit(): void {
     this.store
@@ -33,13 +31,12 @@ export class MainComponent implements OnInit {
   }
 
   setAdminView() {
-    if (this.user.roles.find((e: any) => e.value === RoleEnum.Admin)) {
+    if (this.user.roles.find((e: any) => e.value === RoleEnum.Admin))
       return true
-    }
     return false
   }
 
   logout() {
-    this.store.dispatch(fromAuthStore.Logout())
+    this.store.dispatch(fromAuthStore.Logout({ payload: { id: this.user.id } }))
   }
 }

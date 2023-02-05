@@ -24,9 +24,7 @@
 
   <mat-drawer-container class="drawer" autosize>
     <mat-drawer #drawer class="sidenav" mode="side">
-      <div *ngIf="setAdminView()">
-        <app-nav-list [admin]="setAdminView()"></app-nav-list>
-      </div>
+      <app-nav-list [admin]="setAdminView()"></app-nav-list>
     </mat-drawer>
 
     <div class="content">

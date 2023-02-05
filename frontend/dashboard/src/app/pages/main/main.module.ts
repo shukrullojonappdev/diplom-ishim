@@ -13,6 +13,8 @@ import { WorkoutsModule } from 'src/app/layers/workouts/workouts.module'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import * as authStore from '../../store/auth'
+import { HTTP_INTERCEPTORS } from '@angular/common/http'
+import { JwtInterceptor } from 'src/app/core/interceptors/jwt.interceptor'
 
 @NgModule({
   declarations: [MainComponent, NavListComponent],

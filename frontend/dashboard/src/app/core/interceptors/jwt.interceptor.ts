@@ -5,7 +5,7 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http'
-import { Observable } from 'rxjs'
+import { catchError, Observable } from 'rxjs'
 
 import { Store } from '@ngrx/store'
 import * as fromIndexStore from '../../store'
@@ -13,21 +13,25 @@ import * as fromAuthStore from '../../store/auth'
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private store: Store<fromIndexStore.State>) {}
-
+  isLoggedIn: boolean
   tokens: any
+
+  constructor(private store: Store<fromIndexStore.State>) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     this.store
-      .select(fromAuthStore.selectAuthToken)
+      .select(fromAuthStore.selectAuthStatus)
+      .subscribe((_isLoggedIn) => (this.isLoggedIn = _isLoggedIn))
+    this.store
+      .select(fromAuthStore.selectAuthTokens)
       .subscribe((_tokens) => (this.tokens = _tokens))
 
-    if (this.tokens) {
+    if (this.isLoggedIn) {
       request = request.clone({
-        setHeaders: { Authorization: `Bearer ${this.tokens.access.token}` },
+        setHeaders: { Authorization: `Bearer ${this.tokens.accessToken}` },
       })
     }
 

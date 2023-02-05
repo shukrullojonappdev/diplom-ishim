@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { map, mergeMap, catchError, of, tap } from 'rxjs'
+import { map, mergeMap, catchError, of, tap, repeat } from 'rxjs'
 import { AuthService } from 'src/app/core/services/auth.service'
 import * as fromAuthAction from './auth.actions'
 
@@ -36,7 +36,7 @@ export class AuthEffects {
       mergeMap((payload) =>
         this.authService.registration(payload).pipe(
           tap(() => this.router.navigate(['/', 'home'])),
-          map((_data) => fromAuthAction.LoginSuccess({ data: _data })),
+          map((_data) => fromAuthAction.RegistrationSuccess({ data: _data })),
           catchError((error) =>
             of(fromAuthAction.RegistrationFailure({ error: error }))
           )
@@ -48,8 +48,9 @@ export class AuthEffects {
   logout$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromAuthAction.Logout),
-      mergeMap(() =>
-        this.authService.logout().pipe(
+      map((action) => action.payload),
+      mergeMap((payload) =>
+        this.authService.logout(payload).pipe(
           tap(() => this.router.navigate(['/', 'login'])),
           map(() => fromAuthAction.LogoutSuccess()),
           catchError((error) =>

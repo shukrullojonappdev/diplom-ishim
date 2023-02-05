@@ -27,11 +27,23 @@ export const RegistrationFailure = createAction(
   props<{ error: any }>()
 )
 
-export const Logout = createAction('[Auth] Logout')
+export const Logout = createAction('[Auth] Logout', props<{ payload: any }>())
 
 export const LogoutSuccess = createAction('[Auth] Logout Success')
 
 export const LogoutFailure = createAction(
   '[Auth] Logout Failure',
+  props<{ error: any }>()
+)
+
+export const Refresh = createAction('[Auth] Refresh', props<{ payload: any }>())
+
+export const RefreshSuccess = createAction(
+  '[Auth] Refresh Success',
+  props<{ data: any }>()
+)
+
+export const RefreshFailure = createAction(
+  '[Auth] Refresh Failure',
   props<{ error: any }>()
 )

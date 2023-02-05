@@ -18,7 +18,7 @@ export class AuthService {
     if (user) {
       const { workouts, refreshToken, ...payload } = user
       const tokens = await this.generateTokens(payload)
-      const hashedRefreshToken = await bcrypt.hash(tokens.refresh.token, 10)
+      const hashedRefreshToken = await bcrypt.hash(tokens.refreshToken, 10)
       await this.usersService.update(user.id, {
         refreshToken: hashedRefreshToken,
       })
@@ -60,7 +60,7 @@ export class AuthService {
 
       const { password, workouts, refreshToken, ...payload } = user
       const tokens = await this.generateTokens(payload)
-      const hashedRefreshToken = await bcrypt.hash(tokens.refresh.token, 10)
+      const hashedRefreshToken = await bcrypt.hash(tokens.refreshToken, 10)
       await this.usersService.update(user.id, {
         refreshToken: hashedRefreshToken,
       })
@@ -92,7 +92,7 @@ export class AuthService {
     }
     const { workouts, password, refreshToken, ...payload } = user
     const tokens = await this.generateTokens(payload)
-    const hashedRefreshToken = await bcrypt.hash(tokens.refresh.token, 10)
+    const hashedRefreshToken = await bcrypt.hash(tokens.refreshToken, 10)
     await this.usersService.update(user.id, {
       refreshToken: hashedRefreshToken,
     })
@@ -137,14 +137,8 @@ export class AuthService {
     })
 
     return {
-      access: {
-        token: accessToken,
-        expiresIn: process.env.ACCESS_TOKEN_LIFE_TIME,
-      },
-      refresh: {
-        token: refreshToken,
-        expiresIn: process.env.REFRESH_TOKEN_LIFE_TIME,
-      },
+      accessToken: accessToken,
+      refreshToken: refreshToken,
     }
   }
 }
