@@ -55,6 +55,9 @@ export class JwtInterceptor implements HttpInterceptor {
               payload: { id: this.user.id, refTok: this.tokens.refreshToken },
             })
           )
+          if (request.url.includes('http://localhost:3000/api/refresh')) {
+            this.store.dispatch(fromAuthStore.Logout({ payload: this.user.id }))
+          }
         }
         throw Error(error)
       })

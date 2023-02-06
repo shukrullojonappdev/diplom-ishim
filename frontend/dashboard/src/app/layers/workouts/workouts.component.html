@@ -1,4 +1,4 @@
-<!-- <div class="button-container">
+<div class="button-container">
   <button mat-raised-button (click)="addWorkout()" class="button">
     Добавить
   </button>
@@ -13,7 +13,7 @@
   </button>
 </div>
 
-<table mat-table [dataSource]="workouts$" class="mat-elevation-z8">
+<table mat-table [dataSource]="workouts" class="mat-elevation-z8">
   <ng-container matColumnDef="select">
     <th mat-header-cell *matHeaderCellDef class="column__checkbox">
       <mat-checkbox
@@ -63,4 +63,4 @@
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns" class="row"></tr>
-</table> -->
+</table>
