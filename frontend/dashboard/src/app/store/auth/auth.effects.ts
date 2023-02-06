@@ -45,6 +45,22 @@ export class AuthEffects {
     )
   )
 
+  refresh$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromAuthAction.Refresh),
+      map((action) => action.payload),
+      mergeMap((payload) =>
+        this.authService.refresh(payload).pipe(
+          map((_data) => fromAuthAction.RefreshSuccess({ data: _data })),
+          tap(() => window.location.reload()),
+          catchError((error) =>
+            of(fromAuthAction.RefreshFailure({ error: error }))
+          )
+        )
+      )
+    )
+  )
+
   logout$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromAuthAction.Logout),

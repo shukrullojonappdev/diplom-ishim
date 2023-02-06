@@ -54,6 +54,21 @@ export const reducer = createReducer(
       ...currentState,
     }
   }),
+  on(fromAuthAction.RefreshSuccess, (state, { data }) => {
+    let newState = {
+      ...state,
+      isLoggedIn: true,
+      tokens: data.tokens,
+      user: data.user,
+    }
+    localStorage.setItem(authFeatureKey, JSON.stringify(newState))
+    const currentState = JSON.parse(
+      localStorage.getItem(authFeatureKey) as string
+    )
+    return {
+      ...currentState,
+    }
+  }),
   on(fromAuthAction.LogoutSuccess, (state) => {
     localStorage.removeItem(authFeatureKey)
     return {

@@ -21,8 +21,6 @@ export class AuthController {
     return this.authService.login(loginDto)
   }
 
-  @ApiBearerAuth()
-  @UseGuards(AccessJwtGuard)
   @Post('logout')
   logout(@Body() id: number) {
     return this.authService.logout(id)

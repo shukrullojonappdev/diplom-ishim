@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store'
 import * as fromIndexStore from '../../store'
 import * as fromAuthStore from '../../store/auth'
 import { RoleEnum } from 'src/app/core/enums/role.enum'
+import { AuthService } from 'src/app/core/services/auth.service'
 
 @Component({
   selector: 'app-main',
@@ -14,16 +15,22 @@ import { RoleEnum } from 'src/app/core/enums/role.enum'
 })
 export class MainComponent implements OnInit {
   user: any
+  tokens: any
 
   constructor(
     private router: Router,
-    private store: Store<fromIndexStore.State>
+    private store: Store<fromIndexStore.State>,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.store
       .select(fromAuthStore.selectLoggedUser)
       .subscribe((_user) => (this.user = _user))
+
+    this.store
+      .select(fromAuthStore.selectAuthTokens)
+      .subscribe((_tokens) => (this.tokens = _tokens))
   }
 
   navigateTo(link: string) {
