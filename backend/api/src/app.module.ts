@@ -12,6 +12,7 @@ import { Tag } from './tags/entities/tag.entity'
 import { Role } from './roles/entities/role.entity'
 import { Workout } from './workouts/entities/workout.entity'
 import { AuthModule } from './auth/auth.module'
+import { RolesService } from './roles/roles.service'
 
 @Module({
   imports: [
@@ -28,11 +29,11 @@ import { AuthModule } from './auth/auth.module'
       entities: [User, Tag, Role, Workout],
       synchronize: true,
     }),
-    UsersModule,
+    RolesModule,
     TagsModule,
     WorkoutsModule,
-    RolesModule,
     AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

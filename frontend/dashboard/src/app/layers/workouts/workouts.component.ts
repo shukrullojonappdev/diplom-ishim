@@ -16,7 +16,7 @@ import { WorkoutsService } from 'src/app/core/services/workouts.service'
 export class WorkoutsComponent {
   displayedColumns: string[] = ['select', 'id', 'name', 'videoSrc', 'edit']
 
-  workouts: any
+  workouts: any[]
   selection = new SelectionModel<any>(true, [])
 
   constructor(
@@ -29,7 +29,9 @@ export class WorkoutsComponent {
   }
 
   getWorkouts() {
-    this.workoutsSerice.getWorkouts().subscribe(_workouts => this.workouts = _workouts)
+    this.workoutsSerice
+      .getWorkouts()
+      .subscribe((_workouts) => (this.workouts = _workouts))
   }
 
   addWorkout() {
@@ -67,10 +69,8 @@ export class WorkoutsComponent {
 
   isAllSelected() {
     const numSelected = this.selection.selected?.length
-    let workoutsLength = 0
-    workoutsLength = this.workouts.length
-    const numRows = workoutsLength
-    return numSelected === numRows
+    const workoutsLength = this.workouts?.length
+    return numSelected === workoutsLength
   }
 
   toggleAllRows() {
@@ -79,7 +79,7 @@ export class WorkoutsComponent {
       return
     }
 
-    this.selection.select(this.workouts)
+    this.selection.select(...this.workouts)
   }
 
   checkboxLabel(row?: any): string {

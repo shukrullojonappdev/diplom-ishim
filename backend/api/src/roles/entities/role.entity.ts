@@ -6,11 +6,8 @@ export class Role {
   @PrimaryGeneratedColumn('increment')
   id: number
 
-  @Column()
+  @Column({ unique: true })
   value: string
-
-  @Column()
-  description: string
 
   @ManyToMany(() => User, (user) => user.roles)
   users: User[]

@@ -5,6 +5,7 @@ import {
   OnModuleInit,
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { UsersService } from 'src/users/users.service'
 import { Repository } from 'typeorm'
 import { CreateRoleDto } from './dto/create-role.dto'
 import { UpdateRoleDto } from './dto/update-role.dto'
@@ -17,7 +18,7 @@ export class RolesService {
   ) {}
 
   async create(createRoleDto: CreateRoleDto) {
-    const newRole = createRoleDto
+    const newRole = this.rolesRepository.create(createRoleDto)
 
     if (!newRole) {
       throw new HttpException(
@@ -48,6 +49,16 @@ export class RolesService {
     }
 
     return findedRole
+  }
+
+  async findOneReturn(value: string) {
+    const findedRole = await this.rolesRepository.findOneBy({ value })
+
+    if (findedRole) {
+      return true
+    } else {
+      return false
+    }
   }
 
   async findByValue(value: string) {

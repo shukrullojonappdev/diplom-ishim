@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
+import { OnModuleInit } from '@nestjs/common/interfaces'
 import { InjectRepository } from '@nestjs/typeorm'
 import { RolesService } from 'src/roles/roles.service'
 import { Repository } from 'typeorm'
@@ -56,6 +57,19 @@ export class UsersService {
     }
 
     return findedUser
+  }
+
+  async findOneReturn(email: string) {
+    const findedUser = await this.usersRepository.findOne({
+      where: { email: email },
+      relations: { roles: true },
+    })
+
+    if (findedUser) {
+      return true
+    } else {
+      return false
+    }
   }
 
   async findByEmail(email: string) {

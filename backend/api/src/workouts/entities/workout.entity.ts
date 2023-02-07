@@ -1,4 +1,5 @@
 import { Tag } from 'src/tags/entities/tag.entity'
+import { User } from 'src/users/entities/user.entity'
 import {
   Column,
   Entity,
@@ -23,4 +24,7 @@ export class Workout {
   })
   @JoinTable({ name: 'workoutTags' })
   tags: Tag[]
+
+  @ManyToMany(() => User, (user) => user.workouts)
+  users: User[]
 }

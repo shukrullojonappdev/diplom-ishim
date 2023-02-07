@@ -1,3 +1,29 @@
-<div class="container">
-  <div>hello</div>
+<div id="home" class="container">
+  <div class="box">
+    <mat-grid-list [cols]="width < 1140 ? 2 : 3" rowHeight="300px">
+      <div *ngFor="let workout of workouts">
+        <mat-grid-tile>
+          <mat-card class="card">
+            <mat-card-header>{{ workout.name }}</mat-card-header>
+            <mat-card-content>
+              <iframe
+                width="560"
+                height="315"
+                [src]="workout.videoSrc | safe"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <button class="button" mat-button>
+                <mat-icon>star_outline</mat-icon>
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </mat-grid-tile>
+      </div>
+    </mat-grid-list>
+  </div>
 </div>
