@@ -7,7 +7,7 @@ import { Router } from '@angular/router'
   styleUrls: ['./nav-list.component.scss'],
 })
 export class NavListComponent implements OnInit {
-  links = ['users', 'workouts', 'tags', 'roles']
+  links = ['users', 'workouts', 'tags']
 
   @Input() admin: boolean
 

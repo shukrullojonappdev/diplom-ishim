@@ -1,17 +1,14 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common'
+import { Controller, Get, Param, UseGuards } from '@nestjs/common'
 import { RolesService } from './roles.service'
-import { CreateRoleDto } from './dto/create-role.dto'
-import { UpdateRoleDto } from './dto/update-role.dto'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import { Roles } from 'src/auth/roles/roles.decorator'
+import { RoleEnum } from 'src/auth/roles/roles.enum'
+import { RolesGuard } from 'src/auth/roles/roles.guard'
+import { AccessJwtGuard } from 'src/auth/guards/access-jwt.guard'
 
+@Roles(RoleEnum.Admin)
+@ApiBearerAuth()
+@UseGuards(AccessJwtGuard, RolesGuard)
 @ApiTags('Roles')
 @Controller('roles')
 export class RolesController {

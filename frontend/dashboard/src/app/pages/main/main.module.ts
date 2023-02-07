@@ -7,14 +7,11 @@ import { MaterialModule } from 'src/app/core/modules/material.module'
 import { NavListComponent } from 'src/app/components/nav-list/nav-list.component'
 import { UsersModule } from 'src/app/layers/users/users.module'
 import { TagsModule } from 'src/app/layers/tags/tags.module'
-import { RolesModule } from 'src/app/layers/roles/roles.module'
 import { WorkoutsModule } from 'src/app/layers/workouts/workouts.module'
 
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import * as authStore from '../../store/auth'
-import { HTTP_INTERCEPTORS } from '@angular/common/http'
-import { JwtInterceptor } from 'src/app/core/interceptors/jwt.interceptor'
 
 @NgModule({
   declarations: [MainComponent, NavListComponent],
@@ -24,7 +21,6 @@ import { JwtInterceptor } from 'src/app/core/interceptors/jwt.interceptor'
     MaterialModule,
     UsersModule,
     TagsModule,
-    RolesModule,
     WorkoutsModule,
     StoreModule.forFeature(authStore.authFeatureKey, authStore.reducer),
     EffectsModule.forFeature([authStore.AuthEffects]),

@@ -29,11 +29,6 @@ const routes: Routes = [
             (m) => m.WorkoutsModule
           ),
       },
-      {
-        path: 'roles',
-        loadChildren: () =>
-          import('../../layers/roles/roles.module').then((m) => m.RolesModule),
-      },
     ],
   },
 ]
