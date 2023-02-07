@@ -76,6 +76,43 @@ export class AuthService {
     }
   }
 
+  async registrationAdmin(registrationDto: RegistrationDto) {
+    const userExists = await this.usersService.findByEmail(
+      registrationDto.email,
+    )
+
+    if (userExists) {
+      throw new HttpException(
+        'Пользователь с таким email уже существует.',
+        HttpStatus.BAD_REQUEST,
+      )
+    }
+
+    if (userExists === null) {
+      const hashedPassword = await bcrypt.hash(registrationDto.password, 10)
+      const user = await this.usersService.createAdmin({
+        ...registrationDto,
+        password: hashedPassword,
+      })
+
+      const { password, workouts, refreshToken, ...payload } = user
+      const tokens = await this.generateTokens(payload)
+      const hashedRefreshToken = await bcrypt.hash(tokens.refreshToken, 10)
+      await this.usersService.update(user.id, {
+        refreshToken: hashedRefreshToken,
+      })
+      return {
+        tokens: { ...tokens },
+        user: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          roles: user.roles,
+        },
+      }
+    }
+  }
+
   async logout(userId: number) {
     return await this.usersService.update(userId, { refreshToken: null })
   }

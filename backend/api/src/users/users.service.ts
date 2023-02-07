@@ -32,6 +32,23 @@ export class UsersService {
     return newUser
   }
 
+  async createAdmin(createUserDto: CreateUserDto) {
+    const admin = await this.rolesService.findByValue('Администратор')
+    const user = await this.rolesService.findByValue('Пользователь')
+    const newUser = this.usersRepository.create(createUserDto)
+    newUser.roles = [user, admin]
+
+    if (!newUser) {
+      throw new HttpException(
+        'Ползователь неудачно создан.',
+        HttpStatus.BAD_REQUEST,
+      )
+    }
+
+    await this.usersRepository.save(newUser)
+    return newUser
+  }
+
   async findAll() {
     const users = await this.usersRepository.find({
       relations: {
