@@ -25,9 +25,9 @@ export class AppService implements OnModuleInit {
     )
     if (!user) {
       this.authService.registrationAdmin({
-        username: 'shukrullojondev',
+        username: 'admin',
         email: 'shukrullojon.dev@gmail.com',
-        password: '$Hukrullojon2000',
+        password: '@Dmin2000',
       })
     }
   }
