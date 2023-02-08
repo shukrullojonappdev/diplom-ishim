@@ -77,5 +77,31 @@ export const reducer = createReducer(
       tokens: null,
       user: null,
     }
+  }),
+  on(fromAuthAction.AddWorkoutSuccess, (state, { data }) => {
+    let newState = {
+      ...state,
+      user: data,
+    }
+    localStorage.setItem(authFeatureKey, JSON.stringify(newState))
+    const currentState = JSON.parse(
+      localStorage.getItem(authFeatureKey) as string
+    )
+    return {
+      ...currentState,
+    }
+  }),
+  on(fromAuthAction.DeleteWorkoutSuccess, (state, { data }) => {
+    let newState = {
+      ...state,
+      user: data,
+    }
+    localStorage.setItem(authFeatureKey, JSON.stringify(newState))
+    const currentState = JSON.parse(
+      localStorage.getItem(authFeatureKey) as string
+    )
+    return {
+      ...currentState,
+    }
   })
 )

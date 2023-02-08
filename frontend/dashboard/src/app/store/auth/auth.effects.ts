@@ -3,6 +3,7 @@ import { Router } from '@angular/router'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { map, mergeMap, catchError, of, tap, repeat } from 'rxjs'
 import { AuthService } from 'src/app/core/services/auth.service'
+import { UsersService } from 'src/app/core/services/users.service'
 import * as fromAuthAction from './auth.actions'
 
 @Injectable()
@@ -10,6 +11,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
+    private usersSerivece: UsersService,
     private router: Router
   ) {}
 
@@ -41,6 +43,40 @@ export class AuthEffects {
             of(fromAuthAction.RegistrationFailure({ error: error }))
           )
         )
+      )
+    )
+  )
+
+  addWorkout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromAuthAction.AddWorkout),
+      map((action) => action.payload),
+      mergeMap((payload) =>
+        this.usersSerivece.addWorkout(payload.userId, payload.workoutId).pipe(
+          map((_data) => fromAuthAction.AddWorkoutSuccess({ data: _data })),
+          catchError((error) =>
+            of(fromAuthAction.AddWorkoutFailure({ error: error }))
+          )
+        )
+      )
+    )
+  )
+
+  deleteWorkout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromAuthAction.DeleteWorkout),
+      map((action) => action.payload),
+      mergeMap((payload) =>
+        this.usersSerivece
+          .deleteWorkout(payload.userId, payload.workoutId)
+          .pipe(
+            map((_data) =>
+              fromAuthAction.DeleteWorkoutSuccess({ data: _data })
+            ),
+            catchError((error) =>
+              of(fromAuthAction.DeleteWorkoutFailure({ error: error }))
+            )
+          )
       )
     )
   )

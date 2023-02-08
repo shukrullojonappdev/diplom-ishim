@@ -33,6 +33,16 @@ export class UsersService {
     })
   }
 
+  addWorkout(userId: any, workoutId: any): Observable<any> {
+    return this.http.post(`${this.usersUrl}/workout`, { userId, workoutId })
+  }
+
+  deleteWorkout(userId: any, workoutId: any): Observable<any> {
+    return this.http.delete(`${this.usersUrl}/workout`, {
+      body: { userId, workoutId },
+    })
+  }
+
   updateUser(userId: any, updatedUser: any): Observable<any> {
     return this.http.patch(`${this.usersUrl}/${userId}`, updatedUser)
   }

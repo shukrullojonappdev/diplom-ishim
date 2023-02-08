@@ -2,10 +2,13 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { OnModuleInit } from '@nestjs/common/interfaces'
 import { InjectRepository } from '@nestjs/typeorm'
 import { RolesService } from 'src/roles/roles.service'
+import { WorkoutsService } from 'src/workouts/workouts.service'
 import { Repository } from 'typeorm'
 import { AddRoleDto } from './dto/add-role.dto'
+import { AddWorkoutDto } from './dto/add-workout'
 import { CreateUserDto } from './dto/create-user.dto'
 import { DeleteRoleDto } from './dto/delete-role.dto'
+import { DeleteWorkoutDto } from './dto/delete-workout.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { User } from './entities/user.entity'
 
@@ -13,6 +16,7 @@ import { User } from './entities/user.entity'
 export class UsersService {
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
+    private workoutsService: WorkoutsService,
     private rolesService: RolesService,
   ) {}
 
@@ -53,6 +57,7 @@ export class UsersService {
     const users = await this.usersRepository.find({
       relations: {
         roles: true,
+        workouts: true,
       },
     })
 
@@ -66,7 +71,7 @@ export class UsersService {
   async findOne(id: number) {
     const findedUser = await this.usersRepository.findOne({
       where: { id: id },
-      relations: { roles: true },
+      relations: { roles: true, workouts: true },
     })
 
     if (!findedUser) {
@@ -79,7 +84,7 @@ export class UsersService {
   async findOneReturn(email: string) {
     const findedUser = await this.usersRepository.findOne({
       where: { email: email },
-      relations: { roles: true },
+      relations: { roles: true, workouts: true },
     })
 
     if (findedUser) {
@@ -92,7 +97,7 @@ export class UsersService {
   async findByEmail(email: string) {
     const findedUser = await this.usersRepository.findOne({
       where: { email },
-      relations: { roles: true },
+      relations: { roles: true, workouts: true },
     })
 
     if (findedUser) {
@@ -127,15 +132,44 @@ export class UsersService {
     throw new HttpException('Ползователь не найден.', HttpStatus.BAD_REQUEST)
   }
 
+  async addWorkout(addWorkoutDto: AddWorkoutDto) {
+    const user = await this.findOne(addWorkoutDto.userId)
+    const workout = await this.workoutsService.findOne(addWorkoutDto.workoutId)
+
+    if (user && workout) {
+      user.workouts.push(workout)
+      await this.usersRepository.save(user)
+      const { refreshToken, password, ...result } = user
+      return result
+    }
+    throw new HttpException('Ползователь не найден.', HttpStatus.BAD_REQUEST)
+  }
+
   async deleteRole(deleteRoleDto: DeleteRoleDto) {
     const user = await this.findOne(deleteRoleDto.userId)
     const role = await this.rolesService.findOne(deleteRoleDto.roleId)
 
     if (user && role) {
-      const index = user.roles.indexOf(role)
+      const index = user.roles.findIndex((e) => e.id === role.id)
       user.roles.splice(index, 1)
       await this.usersRepository.save(user)
       return user
+    }
+    throw new HttpException('Ползователь не найден.', HttpStatus.BAD_REQUEST)
+  }
+
+  async deleteWorkout(deleteWorkoutDto: DeleteWorkoutDto) {
+    const user = await this.findOne(deleteWorkoutDto.userId)
+    const workout = await this.workoutsService.findOne(
+      deleteWorkoutDto.workoutId,
+    )
+
+    if (user && workout) {
+      const index = user.workouts.findIndex((e) => e.id === workout.id)
+      user.workouts.splice(index, 1)
+      await this.usersRepository.save(user)
+      const { refreshToken, password, ...result } = user
+      return result
     }
     throw new HttpException('Ползователь не найден.', HttpStatus.BAD_REQUEST)
   }

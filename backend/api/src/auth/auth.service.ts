@@ -16,7 +16,7 @@ export class AuthService {
   async login(loginDto: LoginDto) {
     const user = await this.validateUser(loginDto.email, loginDto.password)
     if (user) {
-      const { workouts, refreshToken, ...payload } = user
+      const { refreshToken, workouts, ...payload } = user
       const tokens = await this.generateTokens(payload)
       const hashedRefreshToken = await bcrypt.hash(tokens.refreshToken, 10)
       await this.usersService.update(user.id, {
@@ -29,6 +29,7 @@ export class AuthService {
           username: user.username,
           email: user.email,
           roles: user.roles,
+          workouts: user.workouts,
         },
       }
     }
@@ -71,6 +72,7 @@ export class AuthService {
           username: user.username,
           email: user.email,
           roles: user.roles,
+          workouts: user.workouts,
         },
       }
     }
@@ -108,6 +110,7 @@ export class AuthService {
           username: user.username,
           email: user.email,
           roles: user.roles,
+          workouts: user.workouts,
         },
       }
     }
@@ -127,7 +130,7 @@ export class AuthService {
     if (!refreshTokenMatch) {
       throw new HttpException('Нет доступа!', HttpStatus.FORBIDDEN)
     }
-    const { workouts, password, refreshToken, ...payload } = user
+    const { password, workouts, refreshToken, ...payload } = user
     const tokens = await this.generateTokens(payload)
     const hashedRefreshToken = await bcrypt.hash(tokens.refreshToken, 10)
     await this.usersService.update(user.id, {
@@ -140,6 +143,7 @@ export class AuthService {
         username: user.username,
         email: user.email,
         roles: user.roles,
+        workouts: user.workouts,
       },
     }
   }
@@ -156,13 +160,7 @@ export class AuthService {
     throw new HttpException('asdf', HttpStatus.BAD_REQUEST)
   }
 
-  private async generateTokens(payload: {
-    id: number
-    username: string
-    email: string
-    refreshToken?: string
-    roles: Role[]
-  }) {
+  private async generateTokens(payload: any) {
     const accessToken = await this.jwtService.signAsync(payload, {
       secret: process.env.ACCESS_TOKEN_SECRET,
       expiresIn: process.env.ACCESS_TOKEN_LIFE_TIME,

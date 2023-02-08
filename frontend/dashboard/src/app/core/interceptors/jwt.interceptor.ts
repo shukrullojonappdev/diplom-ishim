@@ -49,7 +49,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((error) => {
-        if (error.status === 401) {
+        if (error.status === 401 || error.status === 403) {
           this.store.dispatch(
             fromAuthStore.Refresh({
               payload: { id: this.user.id, refTok: this.tokens.refreshToken },

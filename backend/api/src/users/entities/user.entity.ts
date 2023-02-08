@@ -29,7 +29,7 @@ export class User {
   @JoinTable({ name: 'userRoles' })
   roles: Role[]
 
-  @ManyToMany(() => Workout)
+  @ManyToMany(() => Workout, (workout) => workout.users, { cascade: true })
   @JoinTable({ name: 'savedWorkouts' })
   workouts: Workout[]
 }

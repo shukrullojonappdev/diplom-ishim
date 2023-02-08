@@ -1,4 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core'
+import { Store } from '@ngrx/store'
+import * as fromIndexStore from 'src/app/store'
+import * as fromAuthStore from 'src/app/store/auth'
+import { Observable } from 'rxjs'
 import { WorkoutsService } from 'src/app/core/services/workouts.service'
 
 @Component({
@@ -9,13 +13,46 @@ import { WorkoutsService } from 'src/app/core/services/workouts.service'
 export class HomeComponent implements OnInit {
   width: number
   workouts: any
-  constructor(private workoutsService: WorkoutsService) {}
+  user: any
+  constructor(
+    private workoutsService: WorkoutsService,
+    private store: Store<fromIndexStore.State>
+  ) {}
 
   ngOnInit(): void {
     this.width = window.innerWidth
     this.workoutsService
       .getWorkouts()
       .subscribe((_workouts) => (this.workouts = _workouts))
+    this.store
+      .select(fromAuthStore.selectLoggedUser)
+      .subscribe((_user) => (this.user = _user))
+  }
+
+  findWorkout(id: number) {
+    if (
+      this.user.workouts &&
+      this.user.workouts.find((e: any) => e.id === id)
+    ) {
+      return true
+    }
+    return false
+  }
+
+  addWorkout(id: number) {
+    this.store.dispatch(
+      fromAuthStore.AddWorkout({
+        payload: { userId: this.user.id, workoutId: id },
+      })
+    )
+  }
+
+  deleteWorkout(id: number) {
+    this.store.dispatch(
+      fromAuthStore.DeleteWorkout({
+        payload: { userId: this.user.id, workoutId: id },
+      })
+    )
   }
 
   @HostListener('window:resize', ['$event'])

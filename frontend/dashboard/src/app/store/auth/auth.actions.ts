@@ -47,3 +47,33 @@ export const RefreshFailure = createAction(
   '[Auth] Refresh Failure',
   props<{ error: any }>()
 )
+
+export const AddWorkout = createAction(
+  '[Auth] AddWorkout',
+  props<{ payload: any }>()
+)
+
+export const AddWorkoutSuccess = createAction(
+  '[Auth] AddWorkout Success',
+  props<{ data: any }>()
+)
+
+export const AddWorkoutFailure = createAction(
+  '[Auth] AddWorkout Failure',
+  props<{ error: any }>()
+)
+
+export const DeleteWorkout = createAction(
+  '[Auth] DeleteWorkout',
+  props<{ payload: any }>()
+)
+
+export const DeleteWorkoutSuccess = createAction(
+  '[Auth] DeleteWorkout Success',
+  props<{ data: any }>()
+)
+
+export const DeleteWorkoutFailure = createAction(
+  '[Auth] DeleteWorkout Failure',
+  props<{ error: any }>()
+)
