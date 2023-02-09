@@ -34,7 +34,7 @@ export class MainComponent implements OnInit {
   }
 
   navigateTo(link: string) {
-    return this.router.navigate(['/', link])
+    return this.router.navigate([link])
   }
 
   setAdminView() {

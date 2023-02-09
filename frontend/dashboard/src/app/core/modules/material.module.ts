@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatCardModule } from '@angular/material/card'
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatMenuModule } from '@angular/material/menu'
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
 
 @NgModule({
   declarations: [],
@@ -35,6 +36,7 @@ import { MatMenuModule } from '@angular/material/menu'
     MatCardModule,
     MatMenuModule,
     MatGridListModule,
+    MatAutocompleteModule,
   ],
   exports: [
     MatSidenavModule,
@@ -52,6 +54,7 @@ import { MatMenuModule } from '@angular/material/menu'
     MatCardModule,
     MatMenuModule,
     MatGridListModule,
+    MatAutocompleteModule,
   ],
 })
 export class MaterialModule {}

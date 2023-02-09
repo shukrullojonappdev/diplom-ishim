@@ -15,6 +15,10 @@
       <mat-icon>person</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="navigateTo('/home/saved')">
+        <mat-icon>star</mat-icon>
+        <span>Избранные</span>
+      </button>
       <button mat-menu-item (click)="logout()">
         <mat-icon>logout</mat-icon>
         <span>Выход</span>

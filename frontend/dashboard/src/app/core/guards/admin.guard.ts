@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core'
 import {
   ActivatedRouteSnapshot,
+  CanActivate,
   CanActivateChild,
   Router,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router'
-import { Observable } from 'rxjs'
-import * as fromAuthStore from '../../store/auth'
-import * as fromIndexStore from '../../store'
 import { Store } from '@ngrx/store'
+import { Observable } from 'rxjs'
+import * as fromIndexStore from 'src/app/store'
+import * as fromAuthStore from 'src/app/store/auth'
 import { RoleEnum } from '../enums/role.enum'
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminGuard implements CanActivateChild {
-  roles: any[]
-
+  user: any
   constructor(
-    private store: Store<fromIndexStore.State>,
-    private router: Router
+    private router: Router,
+    private store: Store<fromIndexStore.State>
   ) {}
 
   canActivateChild(
@@ -33,9 +33,13 @@ export class AdminGuard implements CanActivateChild {
     | UrlTree {
     this.store
       .select(fromAuthStore.selectLoggedUser)
-      .subscribe((user) => (this.roles = user.roles))
+      .subscribe((_user) => (this.user = _user))
 
-    if (this.roles.find((role) => role === RoleEnum.Admin)) {
+    if (
+      this.user.roles.find((e: any) => e.value === RoleEnum.Admin) ||
+      state.url === '/home' ||
+      state.url === '/home/saved'
+    ) {
       return true
     } else {
       this.router.navigate(['/', 'home'])
