@@ -30,7 +30,7 @@ export class WorkoutsComponent {
 
   getWorkouts() {
     this.workoutsSerice
-      .getWorkouts()
+      .getWorkouts('')
       .subscribe((_workouts) => (this.workouts = _workouts))
   }
 

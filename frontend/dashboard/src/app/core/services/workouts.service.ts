@@ -10,8 +10,10 @@ export class WorkoutsService {
 
   constructor(private http: HttpClient) {}
 
-  getWorkouts(): Observable<any[]> {
-    return this.http.get<any[]>(this.workoutsUrl)
+  getWorkouts(tags: any): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.workoutsUrl}${tags === '' ? '' : `?tags=${tags}`}`
+    )
   }
 
   createWorkout(workout: any): Observable<any> {

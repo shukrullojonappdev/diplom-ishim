@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { Tag } from 'src/tags/entities/tag.entity'
 import { TagsService } from 'src/tags/tags.service'
 import { Repository } from 'typeorm'
 import { AddTagDto } from './dto/add-tag.dto'
@@ -29,10 +30,21 @@ export class WorkoutsService {
     return newWorkout
   }
 
-  async findAll() {
+  async findAll(tags: any) {
+    if (tags === '') {
+      const workouts = await this.workoutsRepository.find({
+        relations: {
+          tags: true,
+        },
+      })
+    }
+
     const workouts = await this.workoutsRepository.find({
       relations: {
         tags: true,
+      },
+      where: {
+        tags: tags,
       },
     })
 
@@ -46,6 +58,9 @@ export class WorkoutsService {
   async findOne(id: number) {
     const findedWorkout = await this.workoutsRepository.findOne({
       where: { id: id },
+      relations: {
+        tags: true,
+      },
     })
 
     if (!findedWorkout) {

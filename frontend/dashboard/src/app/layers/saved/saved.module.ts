@@ -4,17 +4,17 @@ import { CommonModule } from '@angular/common'
 import { SavedRoutingModule } from './saved-routing.module'
 import { SavedComponent } from './saved.component'
 import { MaterialModule } from 'src/app/core/modules/material.module'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { SafePipe } from 'src/app/core/pipes/safe.pipe'
+import { FormsModule } from '@angular/forms'
+import { PipesModule } from 'src/app/core/modules/pipes.module'
 
 @NgModule({
-  declarations: [SavedComponent, SafePipe],
+  declarations: [SavedComponent],
   imports: [
     CommonModule,
     SavedRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
     MaterialModule,
+    PipesModule,
   ],
 })
 export class SavedModule {}

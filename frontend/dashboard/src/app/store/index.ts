@@ -7,14 +7,17 @@ import {
   MetaReducer,
 } from '@ngrx/store'
 
-import * as authStore from './auth'
+import * as fromAuth from './auth'
+import * as fromTags from './tags'
 
 export interface State {
-  [authStore.authFeatureKey]: authStore.State
+  [fromAuth.authFeatureKey]: fromAuth.State
+  [fromTags.tagsFeatureKey]: fromTags.State
 }
 
 export const reducers: ActionReducerMap<State> = {
-  [authStore.authFeatureKey]: authStore.reducer,
+  [fromAuth.authFeatureKey]: fromAuth.reducer,
+  [fromTags.tagsFeatureKey]: fromTags.reducer,
 }
 
 export const metaReducers: MetaReducer<State>[] = []

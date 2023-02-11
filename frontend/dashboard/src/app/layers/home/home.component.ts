@@ -2,7 +2,6 @@ import { Component, HostListener, OnInit } from '@angular/core'
 import { Store } from '@ngrx/store'
 import * as fromIndexStore from 'src/app/store'
 import * as fromAuthStore from 'src/app/store/auth'
-import { Observable } from 'rxjs'
 import { WorkoutsService } from 'src/app/core/services/workouts.service'
 
 @Component({
@@ -21,12 +20,21 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.width = window.innerWidth
-    this.workoutsService
-      .getWorkouts()
-      .subscribe((_workouts) => (this.workouts = _workouts))
+    this.getWorkouts('')
     this.store
       .select(fromAuthStore.selectLoggedUser)
       .subscribe((_user) => (this.user = _user))
+  }
+
+  getWorkouts(value: any) {
+    if (value) {
+      this.workoutsService
+        .getWorkouts(value)
+        .subscribe((_workouts) => (this.workouts = _workouts))
+    }
+    this.workoutsService
+      .getWorkouts(value)
+      .subscribe((_workouts) => (this.workouts = _workouts))
   }
 
   findWorkout(id: number) {

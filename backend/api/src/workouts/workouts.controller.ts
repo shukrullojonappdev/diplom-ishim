@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common'
 import { WorkoutsService } from './workouts.service'
 import { CreateWorkoutDto } from './dto/create-workout.dto'
@@ -18,6 +19,7 @@ import { AccessJwtGuard } from 'src/auth/guards/access-jwt.guard'
 import { Roles } from 'src/auth/roles/roles.decorator'
 import { RoleEnum } from 'src/auth/roles/roles.enum'
 import { RolesGuard } from 'src/auth/roles/roles.guard'
+import { query } from 'express'
 
 @ApiTags('Workouts')
 @Controller('workouts')
@@ -33,8 +35,16 @@ export class WorkoutsController {
   }
 
   @Get()
-  findAll() {
-    return this.workoutsService.findAll()
+  findAll(@Query() query: any) {
+    let tags: Array<{ value: string }> = []
+    if (query.tags) {
+      query.tags.split(',').map((tag: any) => {
+        tags.push({ value: tag })
+      })
+      return this.workoutsService.findAll(tags)
+    }
+
+    return this.workoutsService.findAll('')
   }
 
   @Get(':id')
