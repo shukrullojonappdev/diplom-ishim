@@ -1,15 +1,38 @@
-version: '1'
+version: "2"
 services:
   database:
+    build: ./backend/database/
+    container_name: database
     ports:
       - 5432:5432
     volumes:
-      - ./backend/database:/app-db
-    build: ./backend/database
+      - ./backend/database:/db
+    networks:
+      - my-network
 
   api:
+    build: ./backend/api/
+    container_name: api
     ports:
-      - 3000:3001
+      - 3000:3000
     volumes:
-      - ./backend/api:/app-api
-    build: ./backend/api
+      - ./backend/api:/api
+      - /api/node_modules
+    command: npm run start
+    networks:
+      - my-network
+
+  web:
+    build: ./frontend/dashboard/
+    container_name: web
+    ports:
+      - 8000:8000
+    volumes:
+      - ./frontend/dashboard:/web
+    command: lite-server -c /web/bs-config.json
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge

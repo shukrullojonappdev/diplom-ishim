@@ -1,11 +1,14 @@
 FROM node:lts-alpine
 
-WORKDIR /api
+WORKDIR /web
 
 COPY package*.json .
 RUN npm install
 
+RUN npm i -g @angular/cli
+RUN npm i -g lite-server
+
 COPY . .
 RUN npm run build
 
-EXPOSE 3000
+EXPOSE 4200

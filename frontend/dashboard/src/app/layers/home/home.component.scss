@@ -44,3 +44,8 @@
     width: 330px;
   }
 }
+
+.content {
+  overflow: auto;
+  height: calc(100vh - 220px);
+}
